@@ -1,0 +1,18 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: service-product
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.20:8848
+
+      config:
+        import-check:
+          enabled: false  # ??????????????????????
+
+seata:
+  enabled: false  # ?? Seata???????? globalTransactionScanner ??

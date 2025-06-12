@@ -1,0 +1,18 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: service-order
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.20:8848
+
+      config:
+        import-check:
+          enabled: false  # 关闭配置中心导入检查（避免强制拉取配置报错）
+
+seata:
+  enabled: false  # 关闭 Seata，避免启动时加载 globalTransactionScanner 报错
