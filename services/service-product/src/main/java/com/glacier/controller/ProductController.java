@@ -23,6 +23,7 @@ public class ProductController {
      */
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable("id") Long productId) {
+        System.out.println("查询商品信息：" + productId);
         return productService.getProduct(productId);
     }
 }

@@ -6,6 +6,7 @@ import com.glacier.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private DiscoveryClient discoveryClient;
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -36,13 +39,14 @@ public class OrderServiceImpl implements OrderService {
         order.setAddress("测试地址");
 
         //TODO: 远程调用商品服务，获取商品信息
-        Product product = getProductFromRemote(productId);
-
+//        Product product = getProductFromRemote(productId);
+        //TODO: 负载均衡调用商品服务，获取商品信息(by loadBalancerClient)
+//        Product product = getProductFromLoadBalancerClient(productId);
+        //TODO: 负载均衡调用商品服务，获取商品信息(by annotation)
+        Product product = getProductFromByAnnotation(productId);
         BigDecimal totalPrice = product.getPrice().multiply(new BigDecimal(product.getNumber()));
         order.setTotalPrice(totalPrice);
         order.setProductList(List.of(product));
-
-
         return order;
     }
 
@@ -54,4 +58,24 @@ public class OrderServiceImpl implements OrderService {
         // 2. 调用商品服务，获取商品信息
         return restTemplate.getForObject(url, Product.class);
     }
+
+
+    /**
+     * 完成负载均衡发送请求(默认轮询 By LoadBalancerClient)
+     */
+    private Product getProductFromLoadBalancerClient(Long productId) {
+        ServiceInstance instance = loadBalancerClient.choose("service-product");
+        String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/product/" + productId;
+        System.out.println("负载均衡请求地址：" + url);
+        return restTemplate.getForObject(url, Product.class);
+    }
+
+    /**
+     * 完成负载均衡发送请求(默认轮询 By 注解)
+     */
+    private Product getProductFromByAnnotation(Long productId) {
+        String url = "http://service-product/product/" + productId;
+        return restTemplate.getForObject(url, Product.class);
+    }
+
 }
