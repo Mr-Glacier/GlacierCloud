@@ -1,6 +1,6 @@
 package com.glacier.service.impl;
 
-import com.glacier.bean.Product;
+import com.glacier.product.bean.Product;
 import com.glacier.service.ProductService;
 import org.springframework.stereotype.Service;
 

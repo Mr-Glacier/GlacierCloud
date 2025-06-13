@@ -1,4 +1,4 @@
-package com.glacier.bean;
+package com.glacier.order.bean;
 
 import java.math.BigDecimal;
 import java.util.List;

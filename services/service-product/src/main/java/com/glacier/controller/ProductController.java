@@ -1,6 +1,6 @@
 package com.glacier.controller;
 
-import com.glacier.bean.Product;
+import com.glacier.product.bean.Product;
 import com.glacier.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

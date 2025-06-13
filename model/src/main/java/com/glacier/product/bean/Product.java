@@ -1,4 +1,4 @@
-package com.glacier.bean;
+package com.glacier.product.bean;
 
 import java.math.BigDecimal;
 

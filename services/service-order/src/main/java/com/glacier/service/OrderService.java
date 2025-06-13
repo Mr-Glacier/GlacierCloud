@@ -1,6 +1,6 @@
 package com.glacier.service;
 
-import com.glacier.bean.Order;
+import com.glacier.order.bean.Order;
 
 /**
  * @author Mr-Glacier
