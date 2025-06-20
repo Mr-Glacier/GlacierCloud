@@ -22,8 +22,9 @@ public class ProductController {
      * @apiNote 根据商品id查询商品信息
      */
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable("id") Long productId) {
+    public Product getProduct(@PathVariable("id") Long productId) throws InterruptedException {
         System.out.println("查询商品信息：" + productId);
+        Thread.sleep(1000000);
         return productService.getProduct(productId);
     }
 }

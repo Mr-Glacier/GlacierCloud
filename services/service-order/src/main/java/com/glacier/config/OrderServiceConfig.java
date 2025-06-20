@@ -1,9 +1,11 @@
 package com.glacier.config;
 
+import feign.Logger;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+
 
 /**
  * @author Mr-Glacier
@@ -20,4 +22,8 @@ public class OrderServiceConfig {
         return new RestTemplate();
     }
 
+    @Bean
+    Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
 }

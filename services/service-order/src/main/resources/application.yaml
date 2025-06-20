@@ -22,3 +22,7 @@ spring:
 
 seata:
   enabled: false
+
+logging:
+  level:
+    com.glacier.feign: debug
