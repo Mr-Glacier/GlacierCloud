@@ -28,4 +28,6 @@ public interface ProductFeignClient {
     @GetMapping("/product/{id}")
     Product getProductInfo(@PathVariable("id") Long id);
 
+
+
 }
