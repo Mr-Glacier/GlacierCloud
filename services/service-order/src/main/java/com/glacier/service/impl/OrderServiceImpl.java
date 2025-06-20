@@ -1,5 +1,6 @@
 package com.glacier.service.impl;
 
+import com.glacier.feign.ProductFeignClient;
 import com.glacier.order.bean.Order;
 import com.glacier.product.bean.Product;
 import com.glacier.service.OrderService;
@@ -30,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private ProductFeignClient productFeignClient;
+
     @Override
     public Order createOrder(Long productId, Long userId) {
         Order order = new Order();
@@ -43,7 +47,9 @@ public class OrderServiceImpl implements OrderService {
         //TODO: 负载均衡调用商品服务，获取商品信息(by loadBalancerClient)
 //        Product product = getProductFromLoadBalancerClient(productId);
         //TODO: 负载均衡调用商品服务，获取商品信息(by annotation)
-        Product product = getProductFromByAnnotation(productId);
+//        Product product = getProductFromByAnnotation(productId);
+        //TODO: 使用openfeign调用商品服务，获取商品信息
+        Product product = productFeignClient.getProductInfo(productId);
         BigDecimal totalPrice = product.getPrice().multiply(new BigDecimal(product.getNumber()));
         order.setTotalPrice(totalPrice);
         order.setProductList(List.of(product));

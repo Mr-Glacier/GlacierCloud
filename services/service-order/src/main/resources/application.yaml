@@ -2,6 +2,8 @@ server:
   port: 8000
 
 spring:
+  config:
+    import: nacos:service-order.yaml
   application:
     name: service-order
 
@@ -11,8 +13,12 @@ spring:
         server-addr: 192.168.0.20:8848
 
       config:
+        server-addr: 192.168.0.20:8848
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        name: service-order
         import-check:
-          enabled: false  # 关闭配置中心导入检查（避免强制拉取配置报错）
+          enabled: false
 
 seata:
-  enabled: false  # 关闭 Seata，避免启动时加载 globalTransactionScanner 报错
+  enabled: false
